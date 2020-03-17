@@ -201,10 +201,14 @@ class Workflow
 
     private function doCan($subject, Marking $marking, Transition $transition)
     {
+        $hasPlace = false;
         foreach ($transition->getFroms() as $place) {
-            if (!$marking->has($place)) {
-                return false;
+            if ($marking->has($place)) {
+                $hasPlace = true;
             }
+        }
+        if (!$hasPlace) {
+            return false;
         }
 
         if (true === $this->guardTransition($subject, $marking, $transition)) {
